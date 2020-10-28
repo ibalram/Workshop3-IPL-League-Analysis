@@ -95,26 +95,35 @@ public class LeagueAnalyserService {
 		String json = new Gson().toJson(batsmanList);
 		return json;
 	}
-	
+
 	public String getRunsThenAverageWiseSortedBattingData() throws LeagueAnalyserException {
 		if (batsmanList.size() == 0) {
 			throw new LeagueAnalyserException(LeagueAnalyserException.ExceptionType.INCORRECT_CSV, "No csv data");
 		}
-		Comparator<Batsman> comparator = Comparator.comparing(Batsman::getRuns)
-				.thenComparing(Batsman::getAverage);
+		Comparator<Batsman> comparator = Comparator.comparing(Batsman::getRuns).thenComparing(Batsman::getAverage);
 		this.sortDesc(comparator, batsmanList);
 		String json = new Gson().toJson(batsmanList);
 		return json;
 	}
 
-	private <E> void sortDesc(Comparator<E> censusComparator, List<E> batsmanList) {
-		for (int i = 0; i < batsmanList.size() - 1; ++i) {
-			for (int j = 0; j < batsmanList.size() - i - 1; ++j) {
-				E obj1 = batsmanList.get(j);
-				E obj2 = batsmanList.get(j + 1);
-				if (censusComparator.compare(obj1, obj2) < 0) {
-					batsmanList.set(j, obj2);
-					batsmanList.set(j + 1, obj1);
+	public String getAverageWiseSortedBowlingData() throws LeagueAnalyserException {
+		if (bowlerList.size() == 0) {
+			throw new LeagueAnalyserException(LeagueAnalyserException.ExceptionType.INCORRECT_CSV, "No csv data");
+		}
+		Comparator<Bowler> comparator = Comparator.comparing(Bowler::getAverage);
+		this.sortDesc(comparator, bowlerList);
+		String json = new Gson().toJson(bowlerList);
+		return json;
+	}
+
+	private <E> void sortDesc(Comparator<E> comparator, List<E> list) {
+		for (int i = 0; i < list.size() - 1; ++i) {
+			for (int j = 0; j < list.size() - i - 1; ++j) {
+				E obj1 = list.get(j);
+				E obj2 = list.get(j + 1);
+				if (comparator.compare(obj1, obj2) < 0) {
+					list.set(j, obj2);
+					list.set(j + 1, obj1);
 				}
 			}
 		}

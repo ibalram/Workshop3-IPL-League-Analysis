@@ -50,4 +50,10 @@ public class Bowler {
 				+ fourWickets + ", fiveWickets=" + fiveWickets + "]";
 	}
 
+	public double getAverage() {
+		if (average.equals("-"))
+			return 0.0;
+		return Double.parseDouble(average);
+	}
+
 }
