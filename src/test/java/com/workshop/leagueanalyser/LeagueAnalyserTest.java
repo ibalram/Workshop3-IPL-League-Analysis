@@ -82,4 +82,18 @@ public class LeagueAnalyserTest {
 		Batsman[] sortedList = new Gson().fromJson(sorted, Batsman[].class);
 		assertEquals("Andre Russell", sortedList[0].player);
 	}
+
+	@Test
+	public void givenBattingCsvFileWhenSortedBySixesAndFoursThenStrikeRate_ShouldReturnSorted() {
+		String sorted = null;
+		try {
+			analyser.loadBattingCSV(BATTING_DATA_FILE);
+			sorted = analyser.getBoundariesThenStrikeRateWiseSortedBattingData();
+		} catch (LeagueAnalyserException e) {
+			e.printStackTrace();
+		}
+		// System.out.println(sorted);
+		Batsman[] sortedList = new Gson().fromJson(sorted, Batsman[].class);
+		assertEquals("Andre Russell", sortedList[0].player);
+	}
 }

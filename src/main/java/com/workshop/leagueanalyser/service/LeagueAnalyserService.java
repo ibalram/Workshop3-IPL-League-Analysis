@@ -74,6 +74,17 @@ public class LeagueAnalyserService {
 		return json;
 	}
 
+	public String getBoundariesThenStrikeRateWiseSortedBattingData() throws LeagueAnalyserException {
+		if (batsmanList.size() == 0) {
+			throw new LeagueAnalyserException(LeagueAnalyserException.ExceptionType.INCORRECT_CSV, "No csv data");
+		}
+		Comparator<Batsman> comparator = Comparator.comparing(Batsman::getBoundaries)
+				.thenComparing(Batsman::getStrikeRate);
+		this.sortDesc(comparator, batsmanList);
+		String json = new Gson().toJson(batsmanList);
+		return json;
+	}
+
 	private <E> void sortDesc(Comparator<E> censusComparator, List<E> batsmanList) {
 		for (int i = 0; i < batsmanList.size() - 1; ++i) {
 			for (int j = 0; j < batsmanList.size() - i - 1; ++j) {
