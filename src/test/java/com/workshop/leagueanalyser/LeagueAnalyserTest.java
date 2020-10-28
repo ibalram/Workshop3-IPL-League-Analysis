@@ -166,4 +166,18 @@ public class LeagueAnalyserTest {
 		Bowler[] sortedList = new Gson().fromJson(sorted, Bowler[].class);
 		assertEquals("Ben Cutting", sortedList[0].player);
 	}
+
+	@Test
+	public void givenBowlingCsvFileWhenSortedBy5W4WThenStrikeRate_ShouldReturnSorted() {
+		String sorted = null;
+		try {
+			analyser.loadBowlingCSV(BOWLING_DATA_FILE);
+			sorted = analyser.get5W4WThenStrikeRateWiseSortedBowlingData();
+		} catch (LeagueAnalyserException e) {
+			e.printStackTrace();
+		}
+		// System.out.println(sorted);
+		Bowler[] sortedList = new Gson().fromJson(sorted, Bowler[].class);
+		assertEquals("Lasith Malinga", sortedList[0].player);
+	}
 }

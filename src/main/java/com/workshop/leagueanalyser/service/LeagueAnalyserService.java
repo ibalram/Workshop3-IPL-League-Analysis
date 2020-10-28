@@ -125,12 +125,23 @@ public class LeagueAnalyserService {
 		String json = new Gson().toJson(bowlerList);
 		return json;
 	}
-	
+
 	public String getEconomyWiseSortedBowlingData() throws LeagueAnalyserException {
 		if (bowlerList.size() == 0) {
 			throw new LeagueAnalyserException(LeagueAnalyserException.ExceptionType.INCORRECT_CSV, "No csv data");
 		}
 		Comparator<Bowler> comparator = Comparator.comparing(Bowler::getEconomy);
+		this.sortDesc(comparator, bowlerList);
+		String json = new Gson().toJson(bowlerList);
+		return json;
+	}
+
+	public String get5W4WThenStrikeRateWiseSortedBowlingData() throws LeagueAnalyserException {
+		if (bowlerList.size() == 0) {
+			throw new LeagueAnalyserException(LeagueAnalyserException.ExceptionType.INCORRECT_CSV, "No csv data");
+		}
+		Comparator<Bowler> comparator = Comparator.comparing(Bowler::getFiveAndFourWickets)
+				.thenComparing(Bowler::getStrikeRate);
 		this.sortDesc(comparator, bowlerList);
 		String json = new Gson().toJson(bowlerList);
 		return json;

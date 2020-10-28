@@ -66,4 +66,8 @@ public class Bowler {
 		return economy;
 	}
 
+	public int getFiveAndFourWickets() {
+		return fiveWickets + fourWickets;
+	}
+
 }
