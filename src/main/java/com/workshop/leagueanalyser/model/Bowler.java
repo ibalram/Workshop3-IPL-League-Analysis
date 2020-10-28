@@ -62,4 +62,8 @@ public class Bowler {
 		return Double.parseDouble(strikeRate);
 	}
 
+	public double getEconomy() {
+		return economy;
+	}
+
 }
