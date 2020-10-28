@@ -70,4 +70,8 @@ public class Bowler {
 		return fiveWickets + fourWickets;
 	}
 
+	public int getWickets() {
+		return wickets;
+	}
+
 }
