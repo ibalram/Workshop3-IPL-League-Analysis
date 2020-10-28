@@ -67,4 +67,7 @@ public class Batsman {
 		return sixes + fours;
 	}
 
+	public int getRuns() {
+		return runs;
+	}
 }

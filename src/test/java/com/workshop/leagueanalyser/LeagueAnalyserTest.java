@@ -106,8 +106,22 @@ public class LeagueAnalyserTest {
 		} catch (LeagueAnalyserException e) {
 			e.printStackTrace();
 		}
-		System.out.println(sorted);
+//		System.out.println(sorted);
 		Batsman[] sortedList = new Gson().fromJson(sorted, Batsman[].class);
 		assertEquals("Ishant Sharma", sortedList[0].player);
+	}
+	
+	@Test
+	public void givenBattingCsvFileWhenSortedByRunsThenAverage_ShouldReturnSorted() {
+		String sorted = null;
+		try {
+			analyser.loadBattingCSV(BATTING_DATA_FILE);
+			sorted = analyser.getRunsThenAverageWiseSortedBattingData();
+		} catch (LeagueAnalyserException e) {
+			e.printStackTrace();
+		}
+		System.out.println(sorted);
+		Batsman[] sortedList = new Gson().fromJson(sorted, Batsman[].class);
+		assertEquals("David Warner ", sortedList[0].player);
 	}
 }
