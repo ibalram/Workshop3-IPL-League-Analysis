@@ -59,4 +59,8 @@ public class Batsman {
 		return Double.parseDouble(average);
 	}
 
+	public double getStrikeRate() {
+		return strikeRate;
+	}
+
 }
