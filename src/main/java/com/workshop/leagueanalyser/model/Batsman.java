@@ -63,4 +63,8 @@ public class Batsman {
 		return strikeRate;
 	}
 
+	public int getBoundaries() {
+		return sixes + fours;
+	}
+
 }
