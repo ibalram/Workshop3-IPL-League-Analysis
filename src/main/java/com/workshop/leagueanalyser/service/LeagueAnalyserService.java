@@ -116,6 +116,16 @@ public class LeagueAnalyserService {
 		return json;
 	}
 
+	public String getStrikeRateWiseSortedBowlingData() throws LeagueAnalyserException {
+		if (bowlerList.size() == 0) {
+			throw new LeagueAnalyserException(LeagueAnalyserException.ExceptionType.INCORRECT_CSV, "No csv data");
+		}
+		Comparator<Bowler> comparator = Comparator.comparing(Bowler::getStrikeRate);
+		this.sortDesc(comparator, bowlerList);
+		String json = new Gson().toJson(bowlerList);
+		return json;
+	}
+
 	private <E> void sortDesc(Comparator<E> comparator, List<E> list) {
 		for (int i = 0; i < list.size() - 1; ++i) {
 			for (int j = 0; j < list.size() - i - 1; ++j) {
