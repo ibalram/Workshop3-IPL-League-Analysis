@@ -184,7 +184,19 @@ public class LeagueAnalyserService {
 		if (allrounderList.size() == 0) {
 			throw new LeagueAnalyserException(LeagueAnalyserException.ExceptionType.INCORRECT_CSV, "No allrounders");
 		}
-		Comparator<Allrounder> comparator = Comparator.comparing(Allrounder::getBattingAverage).thenComparing(Allrounder::getBowlingAverage);
+		Comparator<Allrounder> comparator = Comparator.comparing(Allrounder::getBattingAverage)
+				.thenComparing(Allrounder::getBowlingAverage);
+		this.sortDesc(comparator, allrounderList);
+		String json = new Gson().toJson(allrounderList);
+		return json;
+	}
+
+	public String getRunsThenWicketsWiseSortedAllrounderData() throws LeagueAnalyserException {
+		if (allrounderList.size() == 0) {
+			throw new LeagueAnalyserException(LeagueAnalyserException.ExceptionType.INCORRECT_CSV, "No allrounders");
+		}
+		Comparator<Allrounder> comparator = Comparator.comparing(Allrounder::getRuns)
+				.thenComparing(Allrounder::getWickets);
 		this.sortDesc(comparator, allrounderList);
 		String json = new Gson().toJson(allrounderList);
 		return json;

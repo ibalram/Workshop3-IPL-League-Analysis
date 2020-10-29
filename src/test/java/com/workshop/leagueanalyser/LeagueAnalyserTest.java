@@ -216,4 +216,19 @@ public class LeagueAnalyserTest {
 		Allrounder[] sortedList = new Gson().fromJson(sorted, Allrounder[].class);
 		assertEquals("Andre Russell", sortedList[0].player);
 	}
+	
+	@Test
+	public void givenBattingAndBowlingCsvFileWhenSortedByRunsThenWickets_ShouldReturnSorted() {
+		String sorted = null;
+		try {
+			analyser.loadBattingCSV(BATTING_DATA_FILE);
+			analyser.loadBowlingCSV(BOWLING_DATA_FILE);
+			analyser.loadAllroundersData();
+			sorted = analyser.getRunsThenWicketsWiseSortedAllrounderData();
+		} catch (LeagueAnalyserException e) {
+			e.printStackTrace();
+		}
+		Allrounder[] sortedList = new Gson().fromJson(sorted, Allrounder[].class);
+		assertEquals("Andre Russell", sortedList[0].player);
+	}
 }
