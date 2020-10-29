@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import com.google.gson.Gson;
 import com.workshop.leagueanalyser.Executor;
+import com.workshop.leagueanalyser.model.Allrounder;
 import com.workshop.leagueanalyser.model.Batsman;
 import com.workshop.leagueanalyser.model.Bowler;
 import com.workshop.leagueanalyser.service.LeagueAnalyserException;
@@ -93,7 +94,6 @@ public class LeagueAnalyserTest {
 		} catch (LeagueAnalyserException e) {
 			e.printStackTrace();
 		}
-		// System.out.println(sorted);
 		Batsman[] sortedList = new Gson().fromJson(sorted, Batsman[].class);
 		assertEquals("Andre Russell", sortedList[0].player);
 	}
@@ -120,7 +120,6 @@ public class LeagueAnalyserTest {
 		} catch (LeagueAnalyserException e) {
 			e.printStackTrace();
 		}
-		// System.out.println(sorted);
 		Batsman[] sortedList = new Gson().fromJson(sorted, Batsman[].class);
 		assertEquals("David Warner ", sortedList[0].player);
 	}
@@ -134,7 +133,6 @@ public class LeagueAnalyserTest {
 		} catch (LeagueAnalyserException e) {
 			e.printStackTrace();
 		}
-		// System.out.println(sorted);
 		Bowler[] sortedList = new Gson().fromJson(sorted, Bowler[].class);
 		assertEquals("Krishnappa Gowtham", sortedList[0].player);
 	}
@@ -148,7 +146,6 @@ public class LeagueAnalyserTest {
 		} catch (LeagueAnalyserException e) {
 			e.printStackTrace();
 		}
-		// System.out.println(sorted);
 		Bowler[] sortedList = new Gson().fromJson(sorted, Bowler[].class);
 		assertEquals("Krishnappa Gowtham", sortedList[0].player);
 	}
@@ -162,7 +159,6 @@ public class LeagueAnalyserTest {
 		} catch (LeagueAnalyserException e) {
 			e.printStackTrace();
 		}
-		// System.out.println(sorted);
 		Bowler[] sortedList = new Gson().fromJson(sorted, Bowler[].class);
 		assertEquals("Ben Cutting", sortedList[0].player);
 	}
@@ -176,7 +172,6 @@ public class LeagueAnalyserTest {
 		} catch (LeagueAnalyserException e) {
 			e.printStackTrace();
 		}
-		// System.out.println(sorted);
 		Bowler[] sortedList = new Gson().fromJson(sorted, Bowler[].class);
 		assertEquals("Lasith Malinga", sortedList[0].player);
 	}
@@ -190,11 +185,10 @@ public class LeagueAnalyserTest {
 		} catch (LeagueAnalyserException e) {
 			e.printStackTrace();
 		}
-		// System.out.println(sorted);
 		Bowler[] sortedList = new Gson().fromJson(sorted, Bowler[].class);
 		assertEquals("Krishnappa Gowtham", sortedList[0].player);
 	}
-	
+
 	@Test
 	public void givenBowlingCsvFileWhenSortedByWicketsThenAverage_ShouldReturnSorted() {
 		String sorted = null;
@@ -204,8 +198,22 @@ public class LeagueAnalyserTest {
 		} catch (LeagueAnalyserException e) {
 			e.printStackTrace();
 		}
-		// System.out.println(sorted);
 		Bowler[] sortedList = new Gson().fromJson(sorted, Bowler[].class);
 		assertEquals("Imran Tahir", sortedList[0].player);
+	}
+
+	@Test
+	public void givenBattingAndBowlingCsvFileWhenSortedByBattingThenBowlingAverage_ShouldReturnSorted() {
+		String sorted = null;
+		try {
+			analyser.loadBattingCSV(BATTING_DATA_FILE);
+			analyser.loadBowlingCSV(BOWLING_DATA_FILE);
+			analyser.loadAllroundersData();
+			sorted = analyser.getBattingThenBowlingAverageWiseSortedAllrounderData();
+		} catch (LeagueAnalyserException e) {
+			e.printStackTrace();
+		}
+		Allrounder[] sortedList = new Gson().fromJson(sorted, Allrounder[].class);
+		assertEquals("Andre Russell", sortedList[0].player);
 	}
 }

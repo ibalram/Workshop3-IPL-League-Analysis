@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -17,6 +18,7 @@ import com.workshop.leagueanalyser.service.LeagueAnalyserException.ExceptionType
 public class LeagueAnalyserService {
 	List<Batsman> batsmanList = null;
 	List<Bowler> bowlerList = null;
+	List<Allrounder> allrounderList = null;
 
 	public int loadBattingCSV(String filePath) throws LeagueAnalyserException {
 		try (Reader reader = Files.newBufferedReader(Paths.get(filePath))) {
@@ -42,6 +44,17 @@ public class LeagueAnalyserService {
 		} catch (CSVBuilderException e) {
 			throw new LeagueAnalyserException(LeagueAnalyserException.ExceptionType.INCORRECT_CSV, e.getMessage());
 		}
+	}
+
+	public void loadAllroundersData() {
+		allrounderList = new ArrayList<Allrounder>();
+		batsmanList.stream().forEach(batsman -> {
+			bowlerList.stream().forEach(bowler -> {
+				if (bowler.player.equals(batsman.player))
+					allrounderList.add(new Allrounder(batsman.player, batsman.getRuns(), batsman.getAverage(),
+							bowler.getWickets(), bowler.getAverage()));
+			});
+		});
 	}
 
 	public String getAverageWiseSortedBattingData() throws LeagueAnalyserException {
@@ -164,6 +177,16 @@ public class LeagueAnalyserService {
 		Comparator<Bowler> comparator = Comparator.comparing(Bowler::getWickets).thenComparing(Bowler::getAverage);
 		this.sortDesc(comparator, bowlerList);
 		String json = new Gson().toJson(bowlerList);
+		return json;
+	}
+
+	public String getBattingThenBowlingAverageWiseSortedAllrounderData() throws LeagueAnalyserException {
+		if (allrounderList.size() == 0) {
+			throw new LeagueAnalyserException(LeagueAnalyserException.ExceptionType.INCORRECT_CSV, "No allrounders");
+		}
+		Comparator<Allrounder> comparator = Comparator.comparing(Allrounder::getBattingAverage).thenComparing(Allrounder::getBowlingAverage);
+		this.sortDesc(comparator, allrounderList);
+		String json = new Gson().toJson(allrounderList);
 		return json;
 	}
 
