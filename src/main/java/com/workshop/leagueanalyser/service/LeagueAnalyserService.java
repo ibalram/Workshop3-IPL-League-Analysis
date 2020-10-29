@@ -202,6 +202,16 @@ public class LeagueAnalyserService {
 		return json;
 	}
 
+	public String getHundredsThenAverageWiseSortedBattingData() throws LeagueAnalyserException {
+		if (batsmanList.size() == 0) {
+			throw new LeagueAnalyserException(LeagueAnalyserException.ExceptionType.INCORRECT_CSV, "No csv data");
+		}
+		Comparator<Batsman> comparator = Comparator.comparing(Batsman::getCenturies).thenComparing(Batsman::getAverage);
+		this.sortDesc(comparator, batsmanList);
+		String json = new Gson().toJson(batsmanList);
+		return json;
+	}
+
 	private <E> void sortDesc(Comparator<E> comparator, List<E> list) {
 		for (int i = 0; i < list.size() - 1; ++i) {
 			for (int j = 0; j < list.size() - i - 1; ++j) {

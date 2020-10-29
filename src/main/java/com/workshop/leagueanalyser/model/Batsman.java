@@ -70,4 +70,8 @@ public class Batsman {
 	public int getRuns() {
 		return runs;
 	}
+
+	public int getCenturies() {
+		return centuries;
+	}
 }
