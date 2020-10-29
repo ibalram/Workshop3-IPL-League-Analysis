@@ -74,4 +74,8 @@ public class Batsman {
 	public int getCenturies() {
 		return centuries;
 	}
+
+	public int getHalfCenturies() {
+		return halfCenturies;
+	}
 }

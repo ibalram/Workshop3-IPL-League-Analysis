@@ -244,4 +244,17 @@ public class LeagueAnalyserTest {
 		Batsman[] sortedList = new Gson().fromJson(sorted, Batsman[].class);
 		assertEquals("David Warner ", sortedList[0].player);
 	}
+
+	@Test
+	public void givenBattingCsvFileWhenSortedByAverageAndZero100s50s_ShouldReturnSorted() {
+		String sorted = null;
+		try {
+			analyser.loadBattingCSV(BATTING_DATA_FILE);
+			sorted = analyser.getAverageWiseSortedBattingDataWithZeroHundredsFifties();
+		} catch (LeagueAnalyserException e) {
+			e.printStackTrace();
+		}
+		Batsman[] sortedList = new Gson().fromJson(sorted, Batsman[].class);
+		assertEquals("Marcus Stoinis", sortedList[0].player);
+	}
 }

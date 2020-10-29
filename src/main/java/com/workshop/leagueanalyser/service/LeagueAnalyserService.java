@@ -7,6 +7,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import com.cg.opencsvbuilder.CSVBuilderException;
 import com.cg.opencsvbuilder.CSVBuilderFactory;
@@ -209,6 +211,19 @@ public class LeagueAnalyserService {
 		Comparator<Batsman> comparator = Comparator.comparing(Batsman::getCenturies).thenComparing(Batsman::getAverage);
 		this.sortDesc(comparator, batsmanList);
 		String json = new Gson().toJson(batsmanList);
+		return json;
+	}
+
+	public String getAverageWiseSortedBattingDataWithZeroHundredsFifties() throws LeagueAnalyserException {
+		if (batsmanList.size() == 0) {
+			throw new LeagueAnalyserException(LeagueAnalyserException.ExceptionType.INCORRECT_CSV, "No csv data");
+		}
+		Comparator<Batsman> comparator = Comparator.comparing(Batsman::getAverage);
+		List<Batsman> list = batsmanList.stream()
+				.filter(batsman -> batsman.getCenturies() == 0 && batsman.getHalfCenturies() == 0)
+				.collect(Collectors.toList());
+		this.sortDesc(comparator, list);
+		String json = new Gson().toJson(list);
 		return json;
 	}
 
